@@ -40,8 +40,8 @@ VPNGATE_MIRROR = os.environ.get(
     "VPNGATE_MIRROR",
     "https://raw.githubusercontent.com/fdciabdul/Vpngate-Scraper-API/main/json/data.json",
 )
-# TODO(必改)：你的 Cloudflare 检测 Worker 域名（Action 里用 CHECK_WORKER 覆盖）
-WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://REPLACE_ME.workers.dev/check?sstp=vpn:vpn@")
+# 检测 Worker：已部署 vpngate-check（Action 里用 CHECK_WORKER 覆盖，此处为本地默认值）
+WORKER_CHECK_URL = os.environ.get("CHECK_WORKER", "https://vpngate-check.ssnn20012001.workers.dev/check?sstp=vpn:vpn@")
 CONCURRENCY = max(1, int(os.environ.get("CHECK_CONCURRENCY", "32")))
 CHECK_TIMEOUT = float(os.environ.get("CHECK_TIMEOUT", "90"))
 MAX_CHECK_NODES = int(os.environ.get("MAX_CHECK_NODES", "0"))

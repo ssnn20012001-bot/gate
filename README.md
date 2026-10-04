@@ -123,18 +123,19 @@ saas.072159.xyz:443#美国-机房-01$sstp://vpn:vpn@98.76.54.32:5555
    workers/check-socks5_worker.js
    .github/workflows/check.yml
    .gitignore
+   .gitattributes
    ```
 
    `.gitignore` 是隐藏文件，在网页上传界面可能看不到，可以用 Git 客户端或 GitHub 桌面端上传。
 
-### 4. 改两处配置
+### 4. 确认两处配置
 
-只有两处需要改用户名或域名：
+本仓库已经填好了默认值，**如果你沿用本文的部署可以直接跳过本节**；只有换仓库名、换用户名或换检测 Worker 时才需要改。
 
-- **`.github/workflows/check.yml`** — 找到 `CHECK_WORKER`，把 `REPLACE_ME` 换成第 2 步的检测 Worker 域名：
+- **`.github/workflows/check.yml`** — 找到 `CHECK_WORKER`，确认是你的检测 Worker 地址：
 
   ```yaml
-  CHECK_WORKER: "https://你的检测Worker域名.workers.dev/check?sstp=vpn:vpn@"
+  CHECK_WORKER: "https://vpngate-check.ssnn20012001.workers.dev/check?sstp=vpn:vpn@"
   ```
 
 - **`vpngate.py`** — 找到 `NODES_URL`，确认是你的 Pages 地址（如果你改了仓库名或用户名，这里也要跟着改）：
@@ -146,6 +147,10 @@ saas.072159.xyz:443#美国-机房-01$sstp://vpn:vpn@98.76.54.32:5555
   这个值会展示在节点页的订阅入口上，所以必须是最终对外可访问的地址。
 
 其余配置（`EDGE_HOSTS`、`CHECK_CONCURRENCY`、`CHECK_TIMEOUT`）在 workflow 里用环境变量传，不用动代码。
+
+> **注意：`workers.dev` 在中国大陆被墙。** 检测 Worker 用 `xxx.workers.dev` 默认域名在国内**无法访问**（DNS 会被污染劫持，TLS 握手失败）。
+> 这不影响流水线本身 —— `CHECK_WORKER` 是 GitHub Actions 的美国 runner 在调用，能正常连通；受影响的只有你本机想手动调 `check` 接口做调试。
+> 如果你需要在国内直接调试检测接口，或者希望这个检测端长期稳定可用，建议给 Worker 绑定一个自定义域名（Cloudflare 控制台 → Workers 和 Pages → 你的 Worker → 设置 → 域和路由 → 添加自定义域）。
 
 ### 5. 设置 GitHub Pages
 
