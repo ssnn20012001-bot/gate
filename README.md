@@ -198,7 +198,7 @@ permissions:
 
 4. 点保存。
 
-之后每 6 小时流水线自动更新一次 `nodes.txt`，edgetunnel 后台定时拉取，客户端只需刷新订阅，不用做任何操作。
+之后每 4 小时流水线自动更新一次 `nodes.txt`，edgetunnel 后台定时拉取，客户端只需刷新订阅，不用做任何操作。
 
 > 想改更新频率就编辑 `.github/workflows/check.yml` 里的 `cron` 表达式，例如每 2 小时一次是 `0 */2 * * *`，每 30 分钟一次是 `*/30 * * * *`。
 
@@ -239,7 +239,7 @@ permissions:
 - 确认客户端选择的传输协议与 edgetunnel 配置里的一致（`tcp` / `ws` / `grpc` 等要对上）。
 - 确认节点域名没被墙，前面 `EDGE_HOSTS` 那一节的排查同样适用。
 
-**6 小时过去了，`nodes.txt` 没更新**
+**4 小时过去了，`nodes.txt` 没更新**
 
 - 进 **Actions** 看最近一次 **VPN Gate Node Check** 运行是否成功。红色对钩说明当次失败了，点进去看失败步骤的日志。
 - 确认 `schedule` 还在：`.github/workflows/check.yml` 里必须有
@@ -247,7 +247,7 @@ permissions:
   ```yaml
   on:
     schedule:
-      - cron: "0 */6 * * *"
+      - cron: "0 */4 * * *"
   ```
 
   **只有 `workflow_dispatch` 的话就是只能手动触发，永远不会自动更新。**
@@ -298,7 +298,7 @@ UUID 和节点域名由 edgetunnel 后台自己掌握。它拉取 `nodes.txt` �
 ```yaml
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 ```
 

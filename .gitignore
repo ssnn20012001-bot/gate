@@ -2,3 +2,28 @@
 public/
 __pycache__/
 *.pyc
+
+# ---- 绝不入库：含密钥与部署配置 ----
+# wrangler.toml 内含 UUID / PASSWORD（= 后台管理员密码）
+workers/wrangler.toml
+workers/wrangler.json
+wrangler.toml
+wrangler.json
+.dev.vars
+.dev.vars.*
+*.env
+.env
+.env.*
+
+# wrangler 依赖与构建产物
+node_modules/
+workers/node_modules/
+workers/package.json
+workers/package-lock.json
+.wrangler/
+
+# 本地配置与备份
+*.local
+*.bak
+*.old
+config.local.*
