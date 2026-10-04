@@ -42,7 +42,7 @@ jobs:
           # 入口优选域名池（逗号分隔，每项必须带 :443）
           EDGE_HOSTS: "saas.072159.xyz:443,hzytjy.cn:443,ali.nonull.pp.ua:443,auto.dolby.dpdns.org:443,cdn.cnno.de:443,saas.sin.fan:443,cf.777791.xyz:443"
           # 自动更新时展示给用户的订阅地址
-          NODES_URL: "https://szhsh2011-jpg.github.io/gate/nodes.txt"
+          NODES_URL: "https://ssnn20012001-bot.github.io/gate/nodes.txt"
 
       - name: Ensure GitHub Pages is enabled (one-time auto setup)
         run: |
@@ -76,4 +76,4 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Show site URL
-        run: 'echo "site: https://szhsh2011-jpg.github.io/gate/ (deploy outcome: ${{ steps.deployment.outcome }})"'
+        run: 'echo "site: https://ssnn20012001-bot.github.io/gate/ (deploy outcome: ${{ steps.deployment.outcome }})"'

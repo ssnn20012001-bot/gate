@@ -109,7 +109,7 @@ saas.072159.xyz:443#美国-机房-01$sstp://vpn:vpn@98.76.54.32:5555
 
 ### 3. 创建 GitHub 仓库
 
-1. 登录 GitHub（`szhsh2011-jpg`），点右上角 **+** → **New repository**。
+1. 登录 GitHub（`ssnn20012001-bot`），点右上角 **+** → **New repository**。
 2. Repository name 填 `gate`。
 3. **必须是 Public**（GitHub Pages 的免费额度对私有仓库不适用，Actions 也因此无需任何 token 配置）。
 4. 勾选 **Add a README file**。
@@ -140,7 +140,7 @@ saas.072159.xyz:443#美国-机房-01$sstp://vpn:vpn@98.76.54.32:5555
 - **`vpngate.py`** — 找到 `NODES_URL`，确认是你的 Pages 地址（如果你改了仓库名或用户名，这里也要跟着改）：
 
   ```python
-  NODES_URL = os.environ.get("NODES_URL", "https://szhsh2011-jpg.github.io/gate/nodes.txt")
+  NODES_URL = os.environ.get("NODES_URL", "https://ssnn20012001-bot.github.io/gate/nodes.txt")
   ```
 
   这个值会展示在节点页的订阅入口上，所以必须是最终对外可访问的地址。
@@ -178,8 +178,8 @@ permissions:
 
 | 用途 | 地址 |
 | --- | --- |
-| 节点展示页 | `https://szhsh2011-jpg.github.io/gate/` |
-| 订阅文本 | `https://szhsh2011-jpg.github.io/gate/nodes.txt` |
+| 节点展示页 | `https://ssnn20012001-bot.github.io/gate/` |
+| 订阅文本 | `https://ssnn20012001-bot.github.io/gate/nodes.txt` |
 
 ### 8. 填回 edgetunnel 后台
 
@@ -188,7 +188,7 @@ permissions:
 3. 把订阅地址粘进去：
 
    ```
-   https://szhsh2011-jpg.github.io/gate/nodes.txt
+   https://ssnn20012001-bot.github.io/gate/nodes.txt
    ```
 
 4. 点保存。
