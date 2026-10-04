@@ -198,7 +198,9 @@ permissions:
 
 4. 点保存。
 
-之后每 30 分钟流水线自动更新一次 `nodes.txt`，edgetunnel 后台定时拉取，客户端只需刷新订阅，不用做任何操作。
+之后每 6 小时流水线自动更新一次 `nodes.txt`，edgetunnel 后台定时拉取，客户端只需刷新订阅，不用做任何操作。
+
+> 想改更新频率就编辑 `.github/workflows/check.yml` 里的 `cron` 表达式，例如每 2 小时一次是 `0 */2 * * *`，每 30 分钟一次是 `*/30 * * * *`。
 
 ## 配置速查表
 
@@ -237,7 +239,7 @@ permissions:
 - 确认客户端选择的传输协议与 edgetunnel 配置里的一致（`tcp` / `ws` / `grpc` 等要对上）。
 - 确认节点域名没被墙，前面 `EDGE_HOSTS` 那一节的排查同样适用。
 
-**30 分钟过去了，`nodes.txt` 没更新**
+**6 小时过去了，`nodes.txt` 没更新**
 
 - 进 **Actions** 看最近一次 **VPN Gate Node Check** 运行是否成功。红色对钩说明当次失败了，点进去看失败步骤的日志。
 - 确认 `schedule` 还在：`.github/workflows/check.yml` 里必须有
@@ -245,7 +247,7 @@ permissions:
   ```yaml
   on:
     schedule:
-      - cron: "*/30 * * * *"
+      - cron: "0 */6 * * *"
   ```
 
   **只有 `workflow_dispatch` 的话就是只能手动触发，永远不会自动更新。**
@@ -296,11 +298,22 @@ UUID 和节点域名由 edgetunnel 后台自己掌握。它拉取 `nodes.txt` �
 ```yaml
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 ```
 
 `workflow_dispatch` 是让你能手动触发，`schedule` 才是自动更新，两个都要有。
+
+**6. 仓库必须是 Public —— 不能改成 Private**
+
+GitHub **免费账号的私有仓库没有 GitHub Pages 服务**。把仓库切成 Private 会立刻发生两件事：
+
+1. `GET /repos/<owner>/<repo>/pages` 开始返回 `Not Found`，workflow 会在 `actions/configure-pages` 那一步失败（报错 `Get Pages site failed`），后面的上传和部署全部跳过。
+2. **已经发布的站点会被直接删除**，`https://<用户名>.github.io/<仓库>/` 和 `nodes.txt` 立刻变成 404（CDN 缓存可能还会短暂返回旧内容，加个随机查询参数即可看出已挂）。
+
+所以想让代码保密，只能升级 GitHub Pro / Team；否则就得接受仓库公开。想保留私有又保住站点，可以拆成两个仓库：代码放私有仓，生成产物推到另一个公开仓再托管 Pages。
+
+顺带一提，本项目是对上游开源项目 `hezhanleiok/gate` 的部署配置，代码本身没有敏感信息，真正需要保密的只有 `CHECK_WORKER` 域名和 Pages 地址。
 
 **5. 不需要配置任何 GitHub token 或改 workflow permissions**
 
